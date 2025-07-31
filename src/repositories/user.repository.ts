@@ -5,14 +5,14 @@ import { HttpError } from '@src/errors/HttpError';
 export const userRepository = {
   findByEmail: async (email: string): Promise<UserSummary | null> => {
     const result = await pool.query<UserSummary>(
-      `SELECT name, email FROM user WHERE email=$1`,
+      `SELECT email FROM users WHERE email=$1`,
       [email],
     );
     return result.rows[0] || null;
   },
 
   create: async (userData: User): Promise<UserSummary> => {
-    const sql = `INSERT INTO users(name, email, password) values($1, $2, $3) RETURNING id, name, email`;
+    const sql = `INSERT INTO users(name, email, password) values($1, $2, $3)`;
     const result = await pool.query(sql, [
       userData.name,
       userData.email,
