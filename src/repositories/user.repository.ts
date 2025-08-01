@@ -11,6 +11,14 @@ export const userRepository = {
     return result.rows[0] || null;
   },
 
+  findPassword: async (email: string): Promise<User | null> => {
+    const result = await pool.query<User>(
+      `SELECT password FROM users WHERE email=$1`,
+      [email],
+    );
+    return result.rows[0] || null;
+  },
+
   create: async (userData: User): Promise<UserSummary> => {
     const sql = `INSERT INTO users(name, email, password) values($1, $2, $3)`;
     const result = await pool.query(sql, [
