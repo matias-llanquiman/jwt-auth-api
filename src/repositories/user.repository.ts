@@ -1,9 +1,9 @@
 import pool from '@src/config/postgres.config';
-import { User, UserSummary } from '@src/models/user.model';
+import { NewUser, User, UserSummary } from '@src/models/user.model';
 import { HttpError } from '@src/errors/HttpError';
 
 export const userRepository = {
-  findByEmail: async (email: string): Promise<UserSummary | null> => {
+  findEmail: async (email: string): Promise<UserSummary | null> => {
     const result = await pool.query<UserSummary>(
       `SELECT email FROM users WHERE email=$1`,
       [email],
@@ -13,14 +13,14 @@ export const userRepository = {
 
   findPassword: async (email: string): Promise<User | null> => {
     const result = await pool.query<User>(
-      `SELECT password FROM users WHERE email=$1`,
+      `SELECT id, name, email, password FROM users WHERE email=$1`,
       [email],
     );
     return result.rows[0] || null;
   },
 
-  create: async (userData: User): Promise<UserSummary> => {
-    const sql = `INSERT INTO users(name, email, password) values($1, $2, $3)`;
+  create: async (userData: NewUser): Promise<UserSummary> => {
+    const sql = `INSERT INTO users(name, email, password) values($1, $2, $3) RETURNING id, name, email`;
     const result = await pool.query(sql, [
       userData.name,
       userData.email,
