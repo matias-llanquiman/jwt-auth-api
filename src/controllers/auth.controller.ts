@@ -14,4 +14,17 @@ export const authController = {
       next(error);
     }
   },
+
+  login: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email, password } = req.body;
+      if (!email || !password) {
+        return res.status(400).json({ message: 'Missing required fields' });
+      }
+      const { jwt, user } = await authService.login({ email, password });
+      res.status(201).json({ token: jwt, user });
+    } catch (error) {
+      next(error);
+    }
+  },
 };

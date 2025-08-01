@@ -1,16 +1,17 @@
 import {
-  User,
   LoginInput,
-  RegisterInput,
+  LoginResponse,
+  NewUser,
   UserSummary,
 } from '@src/models/user.model';
 import { userRepository } from '@src/repositories/user.repository';
 import { HttpError } from '@src/errors/HttpError';
 import { hashCompare, hashPassword } from '@src/utils/hash';
+import { authJwt } from '@src/utils/authJwt';
 
 export const authService = {
-  register: async (data: RegisterInput): Promise<UserSummary> => {
-    const existing = await userRepository.findByEmail(data.email);
+  register: async (data: NewUser): Promise<UserSummary> => {
+    const existing = await userRepository.findEmail(data.email);
     if (existing) {
       throw new HttpError('Email already exists', 409);
     }
@@ -21,13 +22,21 @@ export const authService = {
     });
   },
 
-  login: async (data: LoginInput): Promise<User> => {
-    const existing = await userRepository.findPassword(data.email);
-    if (!existing) {
+  login: async (data: LoginInput): Promise<LoginResponse> => {
+    const user = await userRepository.findPassword(data.email);
+    if (!user) {
       throw new HttpError('Email does not exists');
     }
-    if (!hashCompare(data.password, existing.password)) {
+    const isPasswordCorrect = await hashCompare(data.password, user.password);
+    if (!isPasswordCorrect) {
       throw new HttpError('Wrong password');
     }
+    if (!user) {
+      throw new HttpError('User does not exists');
+    }
+
+    const jwt = authJwt(user.id);
+    const { password, ...userSafe } = user;
+    return { jwt, user: userSafe };
   },
 };
