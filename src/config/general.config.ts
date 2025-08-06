@@ -4,12 +4,14 @@ dotenv.config();
 
 interface Config {
   port: number;
+  host: string;
   appEnv: string;
   apiKey: string;
 }
 
 const config: Config = {
   port: Number(process.env.APP_PORT) || 4000,
+  host: process.env.APP_HOST || 'localhost',
   appEnv: process.env.APP_ENV || 'development',
   apiKey: process.env.API_SECRET_KEY || '',
 };
