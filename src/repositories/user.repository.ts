@@ -1,6 +1,6 @@
 import pool from '@src/config/postgres.config';
-import { NewUser, User, UserSummary } from '@src/models/user.model';
-import { HttpError } from '@src/errors/HttpError';
+import { NewUser, User, UserSummary } from '@src/types/user.model';
+import { HttpError } from '@src/errors/http.error';
 
 export const userRepository = {
   findEmail: async (email: string): Promise<UserSummary | null> => {

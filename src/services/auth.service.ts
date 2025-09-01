@@ -3,9 +3,9 @@ import {
   LoginResponse,
   NewUser,
   UserSummary,
-} from '@src/models/user.model';
+} from '@src/types/user.model';
 import { userRepository } from '@src/repositories/user.repository';
-import { HttpError } from '@src/errors/HttpError';
+import { HttpError } from '@src/errors/http.error';
 import { hashCompare, hashPassword } from '@src/utils/hash';
 import { authJwt } from '@src/utils/authJwt';
 
