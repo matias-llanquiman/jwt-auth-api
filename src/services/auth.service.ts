@@ -6,8 +6,8 @@ import {
 } from '@src/types/user.model';
 import { userRepository } from '@src/repositories/user.repository';
 import { HttpError } from '@src/errors/http.error';
-import { hashCompare, hashPassword } from '@src/utils/hash';
-import { authJwt } from '@src/utils/authJwt';
+import { hashCompare, hashPassword } from '@src/utils/hash.util';
+import { authJwt } from '@src/utils/jwt.util';
 
 export const authService = {
   register: async (data: NewUser): Promise<UserSummary> => {
