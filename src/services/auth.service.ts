@@ -3,7 +3,7 @@ import {
   LoginResponse,
   NewUser,
   UserSummary,
-} from '@src/types/user.model';
+} from '@src/types/user.type';
 import { userRepository } from '@src/repositories/user.repository';
 import { HttpError } from '@src/errors/http.error';
 import { hashCompare, hashPassword } from '@src/utils/hash.util';

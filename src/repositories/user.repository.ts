@@ -1,5 +1,5 @@
 import pool from '@src/config/postgres.config';
-import { NewUser, User, UserSummary } from '@src/types/user.model';
+import { NewUser, User, UserSummary } from '@src/types/user.type';
 import { HttpError } from '@src/errors/http.error';
 
 export const userRepository = {
