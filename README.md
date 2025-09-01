@@ -97,6 +97,7 @@ npm run dev
 
 ## 📂 Project Structure
 
+```sh
 jwt-auth-api/
 │── src/
 │ ├── app.ts # Express app initialization
@@ -129,7 +130,7 @@ jwt-auth-api/
 │ │ └── user.types.ts
 │ │
 │ └── utils/ # Utility functions (JWT helpers, encryption)
-| ├── hash.util.ts  
+| ├── hash.util.ts
 │ └── jwt.ts
 │
 │── .env.example # Example environment variables
@@ -139,3 +140,4 @@ jwt-auth-api/
 │── tsconfig.json
 │── Dockerfile # containerization
 │── README.md
+```
