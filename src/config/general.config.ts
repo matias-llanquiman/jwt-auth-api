@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import { Secret } from 'jsonwebtoken';
 
 dotenv.config();
 
@@ -6,7 +7,7 @@ interface Config {
   port: number;
   host: string;
   appEnv: string;
-  apiKey: string;
+  apiKey: Secret;
 }
 
 const config: Config = {
