@@ -31,9 +31,6 @@ export const authService = {
     if (!isPasswordCorrect) {
       throw new HttpError('Wrong password');
     }
-    if (!user) {
-      throw new HttpError('User does not exists');
-    }
 
     const jwt = authJwt(user.id);
     const { password, ...userSafe } = user;
