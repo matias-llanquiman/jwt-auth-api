@@ -23,7 +23,5 @@ RUN addgroup -g 1001 -S appuser && \
 RUN chown -R appuser:appuser /usr/src/app
 USER appuser
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s \
-  CMD curl -f http://localhost:3000/ || exit 1
 
 CMD ["npm", "start"]
