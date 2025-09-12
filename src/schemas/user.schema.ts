@@ -8,5 +8,5 @@ export const userRegistrationSchema = z.strictObject({
 
 export const userLoginSchema = z.strictObject({
   email: z.email(),
-  password: z.string().min(8),
+  password: z.string(),
 });
