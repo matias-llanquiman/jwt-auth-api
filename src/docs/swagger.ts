@@ -1,15 +1,16 @@
-import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerJsdoc from 'swagger-jsdoc';
 
-const options: swaggerJSDoc.Options = {
+const options: swaggerJsdoc.Options = {
   definition: {
-    openapi: '3.0.0',
+    openapi: '3.0.3',
     info: {
       title: 'JWT Authentication API',
       version: '1.0.0',
       description: 'API for Authentication using JWT (login & register)',
     },
+    servers: [{ url: 'http://localhost:4000' }],
   },
-  apis: ['../routes/*.ts'],
+  apis: ['src/routes/auth.route.ts'],
 };
 
-export const swaggerSpec = swaggerJSDoc(options);
+export const swaggerSpec = swaggerJsdoc(options);
