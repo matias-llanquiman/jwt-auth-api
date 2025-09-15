@@ -8,6 +8,7 @@ interface Config {
   host: string;
   appEnv: string;
   apiKey: Secret;
+  refreshApiKey: Secret;
 }
 
 const config: Config = {
@@ -15,6 +16,7 @@ const config: Config = {
   host: process.env.APP_HOST || 'localhost',
   appEnv: process.env.APP_ENV || 'development',
   apiKey: process.env.API_SECRET_KEY || '',
+  refreshApiKey: process.env.REFRESH_API_SECRET_KEY || '',
 };
 
 export default config;

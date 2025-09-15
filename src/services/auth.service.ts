@@ -7,7 +7,7 @@ import {
 import { userRepository } from '@src/repositories/user.repository';
 import { HttpError } from '@src/errors/http.error';
 import { hashCompare, hashPassword } from '@src/utils/hash.util';
-import { authJwt } from '@src/utils/jwt.util';
+import { generateAuthJwt } from '@src/utils/jwt.util';
 
 export const authService = {
   register: async (data: NewUser): Promise<UserSummary> => {
@@ -32,7 +32,7 @@ export const authService = {
       throw new HttpError('Wrong password');
     }
 
-    const jwt = authJwt(user.id);
+    const jwt = generateAuthJwt(user.id);
     const { password, ...userSafe } = user;
     return { jwt, user: userSafe };
   },
