@@ -23,6 +23,7 @@ export interface LoginInput {
 }
 
 export interface LoginResponse {
-  jwt: string;
+  accessToken: string;
+  refreshToken: string;
   user: UserSummary;
 }
