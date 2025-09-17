@@ -17,6 +17,21 @@ export const generateRefreshJwt = (userId: number): string => {
   });
 };
 
-export const verifyJwt = (token: string): string | JwtPayload => {
-  return jwt.verify(token, config.apiKey);
+type TokenType = 'ACCESS' | 'REFRESH';
+
+export const verifyJwt = (
+  token: string,
+  type: TokenType,
+): JwtPayload | null => {
+  try {
+    if (type === 'ACCESS') {
+      return jwt.verify(token, config.apiKey) as JwtPayload;
+    }
+    if (type === 'REFRESH') {
+      return jwt.verify(token, config.refreshApiKey) as JwtPayload;
+    }
+    return null;
+  } catch (err) {
+    return null;
+  }
 };
