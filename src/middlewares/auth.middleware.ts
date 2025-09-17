@@ -3,8 +3,8 @@ import { verifyJwt } from '@src/utils/jwt.util';
 import { HttpError } from '@src/errors/http.error';
 import { Request, Response, NextFunction } from 'express';
 
-export interface TokenRequest extends Request {
-  token: string | JwtPayload;
+interface TokenRequest extends Request {
+  token: JwtPayload | null;
 }
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
@@ -12,10 +12,10 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     const token = req.header('Authorization')?.replace('Bearer ', '');
 
     if (!token) {
-      throw new HttpError('Token not found', 401);
+      throw new HttpError('Unauthorized', 401);
     }
 
-    const decoded = verifyJwt(token);
+    const decoded = verifyJwt(token, 'ACCESS');
     (req as TokenRequest).token = decoded;
     next();
   } catch (error) {
