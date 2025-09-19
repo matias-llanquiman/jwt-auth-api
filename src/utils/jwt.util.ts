@@ -5,7 +5,7 @@ import { uuidv4 } from 'zod';
 export const generateAuthJwt = (userId: number): string => {
   const payload = { userId };
   return jwt.sign(payload, config.apiKey, {
-    expiresIn: '20s',
+    expiresIn: '1m',
   });
 };
 
