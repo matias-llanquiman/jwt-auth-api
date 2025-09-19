@@ -3,6 +3,13 @@ import { NewUser, User, UserSummary } from '@src/types/user.type';
 import { HttpError } from '@src/errors/http.error';
 
 export const userRepository = {
+  findById: async (id: number): Promise<UserSummary | null> => {
+    const result = await pool.query<UserSummary>(
+      `SELECT id, name, email FROM users WHERE id=$1`,
+      [id],
+    );
+    return result.rows[0] || null;
+  },
   findEmail: async (email: string): Promise<UserSummary | null> => {
     const result = await pool.query<UserSummary>(
       `SELECT email FROM users WHERE email=$1`,
