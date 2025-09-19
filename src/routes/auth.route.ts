@@ -5,6 +5,7 @@ import {
   userRegistrationSchema,
   userLoginSchema,
 } from '@src/schemas/user.schema';
+import { auth } from '@src/middlewares/auth.middleware';
 
 /**
  * @openapi
@@ -73,5 +74,6 @@ router.post(
   authController.register,
 );
 router.post('/login', validateData(userLoginSchema), authController.login);
+router.get('/profile', auth, authController.getProfile);
 
 export default router;

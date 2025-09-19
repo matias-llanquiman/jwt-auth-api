@@ -3,7 +3,7 @@ import { verifyJwt } from '@src/utils/jwt.util';
 import { HttpError } from '@src/errors/http.error';
 import { Request, Response, NextFunction } from 'express';
 
-interface TokenRequest extends Request {
+export interface TokenRequest extends Request {
   token: JwtPayload | null;
 }
 
