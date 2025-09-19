@@ -1,5 +1,6 @@
 import { authService } from '@src/services/auth.service';
 import { Request, Response, NextFunction } from 'express';
+import { TokenRequest } from '@src/middlewares/auth.middleware';
 
 export const authController = {
   register: async (req: Request, res: Response, next: NextFunction) => {
@@ -25,6 +26,17 @@ export const authController = {
         sameSite: 'none',
       });
       res.status(201).json({ accessToken: accessToken, user });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  getProfile: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userId = (req as TokenRequest).token!.userId;
+      console.log(userId);
+      const user = await authService.getProfile(userId);
+      res.status(200).json(user);
     } catch (error) {
       next(error);
     }

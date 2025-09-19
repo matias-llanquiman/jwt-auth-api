@@ -51,4 +51,12 @@ export const authService = {
 
     return { accessToken: accessJwt, refreshToken: refreshJwt, user: userSafe };
   },
+
+  getProfile: async (userId: number): Promise<UserSummary> => {
+    const user = await userRepository.findById(userId);
+    if (!user) {
+      throw new HttpError('User not found', 401);
+    }
+    return user;
+  },
 };
