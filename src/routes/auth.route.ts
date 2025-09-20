@@ -75,5 +75,6 @@ router.post(
 );
 router.post('/login', validateData(userLoginSchema), authController.login);
 router.get('/profile', auth, authController.getProfile);
+router.post('/refresh', authController.refresh);
 
 export default router;
