@@ -27,3 +27,8 @@ export interface LoginResponse {
   refreshToken: string;
   user: UserSummary;
 }
+
+export interface RefreshResponse {
+  accessToken: string;
+  refreshToken: string;
+}
