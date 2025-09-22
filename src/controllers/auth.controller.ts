@@ -1,6 +1,7 @@
 import { authService } from '@src/services/auth.service';
 import { Request, Response, NextFunction } from 'express';
 import { TokenRequest } from '@src/middlewares/auth.middleware';
+import { HttpError } from '@src/errors/http.error';
 
 export const authController = {
   register: async (req: Request, res: Response, next: NextFunction) => {
@@ -33,7 +34,9 @@ export const authController = {
 
   getProfile: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userId = (req as TokenRequest).token!.userId;
+      const token = (req as TokenRequest).token;
+      if (!token || !token.userId) throw new HttpError('Invalid token', 401);
+      const userId = token.userId;
       const user = await authService.getProfile(userId);
       res.status(200).json(user);
     } catch (error) {
@@ -43,7 +46,9 @@ export const authController = {
 
   refresh: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const token = req.cookies.refreshToken;
+      const token = req.cookies['refreshToken'];
+      if (!token) throw new HttpError('Refresh token missing', 401);
+
       const { accessToken, refreshToken } = await authService.refresh(token);
       res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
