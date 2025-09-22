@@ -2,12 +2,15 @@ import pool from '@src/config/postgres.config';
 import {
   RefreshToken,
   RefreshTokenSummary,
+  RefreshTokenSummaryBd,
 } from '@src/types/refresh-token.type';
 
 export const refreshTokenRepository = {
-  findByUserId: async (userId: number): Promise<string> => {
+  findByUserId: async (
+    userId: number,
+  ): Promise<RefreshTokenSummaryBd | null> => {
     const sql = `SELECT refresh_token FROM refresh_tokens WHERE user_id = $1`;
-    const result = await pool.query(sql, [userId]);
+    const result = await pool.query<RefreshTokenSummaryBd>(sql, [userId]);
     return result.rows[0] || null;
   },
   deleteByUserId: async (userId: number) => {
