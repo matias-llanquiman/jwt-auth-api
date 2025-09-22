@@ -1,11 +1,7 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
 import { verifyJwt } from '@src/utils/jwt.util';
 import { HttpError } from '@src/errors/http.error';
 import { Request, Response, NextFunction } from 'express';
-
-export interface TokenRequest extends Request {
-  token: JwtPayload | null;
-}
+import { TokenRequest } from '@src/types/refresh-token.type';
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -22,3 +18,4 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     throw new HttpError('Invalid or expired token', 403);
   }
 };
+export { TokenRequest };
