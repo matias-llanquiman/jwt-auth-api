@@ -32,6 +32,19 @@ export const authController = {
     }
   },
 
+  logout: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const token = req.cookies['refreshToken'];
+      if (!token) throw new HttpError('Refresh token missing', 401);
+
+      await authService.logout(token);
+      res.clearCookie('refreshToken');
+      res.status(200).json({ message: 'You are logged out!' });
+    } catch (error) {
+      next(error);
+    }
+  },
+
   getProfile: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const token = (req as TokenRequest).token;

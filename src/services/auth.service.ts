@@ -57,6 +57,17 @@ export const authService = {
     return { accessToken: accessJwt, refreshToken: refreshJwt, user: userSafe };
   },
 
+  logout: async (token: string) => {
+    if (!token) {
+      throw new HttpError('Unauthorized', 401);
+    }
+
+    const decoded = verifyJwt(token, 'REFRESH');
+    const userId = decoded!.userId;
+
+    await refreshTokenRepository.deleteByUserId(userId);
+  },
+
   getProfile: async (userId: number): Promise<UserSummary> => {
     const user = await userRepository.findById(userId);
     if (!user) {
